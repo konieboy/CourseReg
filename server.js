@@ -10,6 +10,7 @@ var jwt = require('jsonwebtoken');
 var moment = require('moment');
 var request = require('request');
 
+
 // Load environment variables from .env file
 dotenv.load();
 
@@ -19,6 +20,7 @@ var User = require('./models/User');
 // Controllers
 var userController = require('./controllers/user');
 var contactController = require('./controllers/contact');
+var sqlController = require('./controllers/query');
 
 var app = express();
 
@@ -64,6 +66,10 @@ app.post('/login', userController.loginPost);
 app.post('/forgot', userController.forgotPost);
 app.post('/reset/:token', userController.resetPost);
 app.get('/unlink/:provider', userController.ensureAuthenticated, userController.unlink);
+
+// Database calls
+app.get('/getAllUsers', sqlController.getAllUsers);
+
 
 app.get('*', function(req, res) {
   res.redirect('/#' + req.originalUrl);

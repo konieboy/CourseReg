@@ -30,6 +30,14 @@ angular.module('MyApp', ['ngRoute', 'satellizer'])
         controller: 'ForgotCtrl',
         resolve: { skipIfAuthenticated: skipIfAuthenticated }
       })
+      .when('/create', {
+        templateUrl: 'partials/create.html',
+        controller: 'CreateCtrl',
+      })
+      .when('/view', {
+        templateUrl: 'partials/view.html',
+        controller: 'ForgotCtrl',
+      })
       .when('/reset/:token', {
         templateUrl: 'partials/reset.html',
         controller: 'ResetCtrl',

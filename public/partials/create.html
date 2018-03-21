@@ -1,0 +1,39 @@
+<div ng-controller="CreateCtrl" ng-app="myApp">
+
+  <div ng-if="isAuthenticated()" class = "center" style="margin-left:auto;margin-right:auto;text-align:center;">
+             Hello {{currentUser.name}}, please select the progtam you belong to:<br>
+              
+  </div>
+
+
+
+    <div data-ng-init="getUsers()">
+            
+        <body ng-app="ngRepeat">
+            <div ng-controller="CreateCtrl">
+            <table class = "center">
+              <tr>
+                  <th>Name</th>
+                  <th>Id</th>
+                  <th>misc</th>
+              </tr>
+
+              <tr ng-repeat="item in users.success">
+                  <td>{{item.name}}</td>
+                  <td>{{item.id}}</td>
+                  <td>{{item.name}}</td>
+              </tr>
+          </table>
+
+    <ul>
+      <li ng-repeat="name in response.text"><p>{{name}}</p></li>
+    </ul>
+
+  <div ng-if="!isAuthenticated()" class = "center" style="margin-left:auto;margin-right:auto;text-align:center;">
+    Hello, please select the progtam you belong to:<br>
+
+
+    
+</div>
+  
+</nav>

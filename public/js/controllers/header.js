@@ -13,4 +13,7 @@ angular.module('MyApp')
       delete $window.localStorage.user;
       $location.path('/');
     };
+
+   // $scope.response = { text: ['hello', 'world'] };  
+    
   });
