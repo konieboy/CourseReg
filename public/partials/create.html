@@ -1,12 +1,44 @@
 <div ng-controller="CreateCtrl" ng-app="myApp">
 
   <div ng-if="isAuthenticated()" class = "center" style="margin-left:auto;margin-right:auto;text-align:center;">
-             Hello {{currentUser.name}}, please select the progtam you belong to:<br>
-              
-  </div>
+             Hello {{currentUser.name}}, please select the faculty you belong to:<br>
+        <div ng-controller="CreateCtrl">
+         
+             <div data-ng-init="getFaculties()"  >
+                    <select ng-model="selectedFaculty" ng-change="getMajors(selectedFaculty.name)" ng-options="f as f.name for f in faculties.success">
+                        <option value="">Select Faculty</option>
+                    </select>  
+                    <div> Selected: {{selectedFaculty.name}} </div>
+            </div>
+
+            <div ng-if="selectedFaculty.name" data-ng-init="getMajors(selectedFaculty.name)" >
+                    <br>Please select the major you belong to:<br>
+                    <select ng-model="selectedMajor" ng-options="m as m.name for m in majors.success">
+                        <option value="">Select Major</option>
+                    </select>  
+                    <div> Selected: {{selectedMajor.name}} </div>
+            </div>
+
+            <div ng-if="selectedMajor.name" data-ng-init="getConcentrations(selectedMajor.name)" >
+                    <br>Please select the concentration you belong to:<br>
+                    <select ng-model="selectedconcentration" ng-options="c as c.name for c in concentrations.success">
+                        <option value="">Select concentration</option>
+                    </select>  
+                    <div> Selected: {{selectedconcentration.name}} </div>
+            </div>
+
+</div>
+
+  <!-- <body> hello {{selectedFaculty.success.name}} </body>
+  <body> hello {{selectedFaculty.success}} </body>
+  <body> hello {{selectedFaculty.name}} </body> -->
+
+  <!-- <div ng-if="{{selectedFaculty.name}} != null" class = "center" style="margin-left:auto;margin-right:auto;text-align:center;">
+        Hello {{currentUser.name}}, please select the faculty you belong to:<br>
+ -->
 
 
-
+<!-- 
     <div data-ng-init="getUsers()">
             
         <body ng-app="ngRepeat">
@@ -23,15 +55,14 @@
                   <td>{{item.id}}</td>
                   <td>{{item.name}}</td>
               </tr>
-          </table>
+          </table> -->
 
-    <ul>
+    <!-- <ul>
       <li ng-repeat="name in response.text"><p>{{name}}</p></li>
-    </ul>
+    </ul> -->
 
-  <div ng-if="!isAuthenticated()" class = "center" style="margin-left:auto;margin-right:auto;text-align:center;">
-    Hello, please select the progtam you belong to:<br>
-
+    <div ng-if="!isAuthenticated()" class = "center" style="margin-left:auto;margin-right:auto;text-align:center;">
+            Hello, please login before using this page:<br>
 
     
 </div>

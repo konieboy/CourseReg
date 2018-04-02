@@ -19,7 +19,53 @@ angular.module('MyApp')
       });
   };
 
+  $scope.getFaculties = function() {
+    Query.getFaculties()
+      .then(function(response) {
+        $scope.faculties = {
+          success: (response.data)
+        };
+      })
+      .then(function(response) {
+        //$scope.selectedFaculty = $scope.faculties.success[0];
+      })
+
+      .catch(function(response) {
+        $scope.faculties = {
+          error: Array.isArray(response.data) ? response.data : [response.data]
+        };
+      });
+  };
+
+  $scope.getMajors = function(sFaculty) {
+    Query.getMajors(sFaculty)
+      .then(function(response) {
+        $scope.majors = {
+          success: (response.data)
+        };
+      })
+      .catch(function(response) {
+        $scope.majors = {
+          error: Array.isArray(response.data) ? response.data : [response.data]
+        };
+      });
+  };
+
+  $scope.getConcentrations = function(sFaculty) {
+    Query.getConcentrations(sFaculty)
+      .then(function(response) {
+        $scope.concentrations = {
+          success: (response.data)
+        };
+      })
+      .catch(function(response) {
+        $scope.majors = {
+          error: Array.isArray(response.data) ? response.data : [response.data]
+        };
+      });
+  };
+
   $scope.response = { text: [ 'hello', 'world'] };  
-  
+
 
 });

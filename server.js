@@ -69,6 +69,8 @@ app.get('/unlink/:provider', userController.ensureAuthenticated, userController.
 
 // Database calls
 app.get('/getAllUsers', sqlController.getAllUsers);
+app.get('/getFaculties', sqlController.getFaculties);
+app.get('/getMajors', sqlController.getMajors);
 
 
 app.get('*', function(req, res) {
