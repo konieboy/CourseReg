@@ -1,44 +1,64 @@
 <div ng-controller="CreateCtrl" ng-app="myApp">
+    <div ng-show="IsVisible">
 
-  <div ng-if="isAuthenticated()" class = "center" style="margin-left:auto;margin-right:auto;text-align:center;">
-             Hello {{currentUser.name}}, please select the faculty you belong to:<br>
-        <div ng-controller="CreateCtrl">
-         
-             <div data-ng-init="getFaculties()"  >
-                    <select ng-model="selectedFaculty" ng-change="getMajors(selectedFaculty.name)" ng-options="f as f.name for f in faculties.success">
-                        <option value="">Select Faculty</option>
-                    </select>  
-                    <div> Selected: {{selectedFaculty.name}} </div>
+        <div ng-if="isAuthenticated()" class="center" style="margin-left:auto;margin-right:auto;text-align:center;">
+            <h3> Hello {{currentUser.name}}, please select the faculty you belong to: </h3>
+            <br>
+
+            <div data-ng-init="getFaculties()">
+                <select ng-model="selectedFaculty" ng-change="getMajors(selectedFaculty.name)" ng-change="getConcentrations(selectedFaculty.name, selectedMajor.name)"
+                    ng-options="f as f.name for f in faculties.success">
+                    <option value="">Select Faculty</option>
+                </select>
+                <!-- <div> Selected: {{selectedFaculty.name}} </div> -->
             </div>
 
-            <div ng-if="selectedFaculty.name" data-ng-init="getMajors(selectedFaculty.name)" >
-                    <br>Please select the major you belong to:<br>
-                    <select ng-model="selectedMajor" ng-options="m as m.name for m in majors.success">
-                        <option value="">Select Major</option>
-                    </select>  
-                    <div> Selected: {{selectedMajor.name}} </div>
-            </div>
-
-            <div ng-if="selectedMajor.name" data-ng-init="getConcentrations(selectedMajor.name)" >
-                    <br>Please select the concentration you belong to:<br>
+            <div ng-if="selectedFaculty.name" data-ng-init="getMajors(selectedFaculty.name)">
+                <br> <h3>Select the major you belong to:</h3>
+                <select ng-model="selectedMajor" ng-options="m as m.name for m in majors.success">
+                    <option value="">Select Major</option>
+                </select>
+                <!-- <div> Selected: {{selectedMajor.name}} </div> -->
+                <div ng-if="selectedMajor.name" data-ng-init="getConcentrations(selectedFaculty.name, selectedMajor.name)">
+                    <br> <h3>Select the concentration you belong to:</h4>
+                    <br>
                     <select ng-model="selectedconcentration" ng-options="c as c.name for c in concentrations.success">
-                        <option value="">Select concentration</option>
-                    </select>  
-                    <div> Selected: {{selectedconcentration.name}} </div>
+                        <option value="">Select Concentration</option>
+                    </select>
+                    <!-- <div> Selected: {{selectedconcentration.name}} </div> -->
+
+                    <div ng-if="selectedMajor.name" data-ng-init="getMinors(selectedFaculty.name)">
+                        <br><h3>Please select the minor you belong to:</h4>
+                        <br>
+                        <select ng-model="selectedMinor" ng-options="m as m.name for m in minors.success">
+                            <option value="">Select Minor</option>
+                        </select>
+                        <!-- <div> Selected: {{selectedMinor.name}} </div> -->
+
+                        <div ng-if="selectedMajor.name" data-ng-init="getMinors(selectedFaculty.name)">
+                            <br>
+                            <button ng-click="nextPage(currentUser.email, selectedFaculty.name, selectedMajor.name, selectedMinor.name, selectedconcentration.name); ShowHide() "
+                            style="background:rgb(111, 159, 216) ;color: white; ">
+                            Continue</button>
+                        </div>
+                    </div>
+
+                </div>
+
             </div>
 
-</div>
+        </div>
 
-  <!-- <body> hello {{selectedFaculty.success.name}} </body>
+        <!-- <body> hello {{selectedFaculty.success.name}} </body>
   <body> hello {{selectedFaculty.success}} </body>
   <body> hello {{selectedFaculty.name}} </body> -->
 
-  <!-- <div ng-if="{{selectedFaculty.name}} != null" class = "center" style="margin-left:auto;margin-right:auto;text-align:center;">
+        <!-- <div ng-if="{{selectedFaculty.name}} != null" class = "center" style="margin-left:auto;margin-right:auto;text-align:center;">
         Hello {{currentUser.name}}, please select the faculty you belong to:<br>
  -->
 
 
-<!-- 
+        <!-- 
     <div data-ng-init="getUsers()">
             
         <body ng-app="ngRepeat">
@@ -57,14 +77,47 @@
               </tr>
           </table> -->
 
-    <!-- <ul>
+        <!-- <ul>
       <li ng-repeat="name in response.text"><p>{{name}}</p></li>
     </ul> -->
 
-    <div ng-if="!isAuthenticated()" class = "center" style="margin-left:auto;margin-right:auto;text-align:center;">
-            Hello, please login before using this page:<br>
 
+
+    </div>
+    <div ng-show="!IsVisible">
+
+        <div data-ng-init="getAllCourses()">
+
+           <legend class="center" style="margin-left:auto;margin-right:auto;text-align:center;"> Please select the courses that you have already taken: </legend>
+            <br>
     
+            <table class="table table-bordered">
+                <tr>
+                    <th>#</th>
+                    <th>Course Number</th>
+                    <th>Course Name</th>
+                    <th>Course Description</th>
+                </tr>
+                <tr ng-repeat="item in courses.success" ng-class="{'selected':$index == selectedRow}" ng-click="setClickedRow($index)">
+                    <td>{{$index}}</td>
+                    <td>{{item.Dept_Name}} {{item.Number}}</td>
+                    <td>{{item.Name}}</td>
+                    <td>{{item.Description}}</td>
+                </tr>
+            </table>
+            <div ng-show="courses.success[selectedRow] != null && courses.success[0] != null">
+                Are you sure you want to add {{courses.success[selectedRow].Dept_Name}} {{courses.success[selectedRow].Number}} as a course?
+                <button ng-click="updateRows(selectedRow, currentUser.email, courses.success[selectedRow].Dept_Name, courses.success[selectedRow].Number)"
+                    style="background:rgb(111, 159, 216) ;color: white; "> Confirm </button>
+            </div>
+            <button style="background:rgb(216, 111, 176) ;color: white;"> Next </button>
+
+        </div>
+    </div>
 </div>
-  
-</nav>
+
+
+<div ng-if="!isAuthenticated()" class="center" style="margin-left:auto;margin-right:auto;text-align:center;">
+    Hello, please login before using this page
+    <br>
+</div>

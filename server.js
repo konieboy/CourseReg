@@ -69,8 +69,21 @@ app.get('/unlink/:provider', userController.ensureAuthenticated, userController.
 
 // Database calls
 app.get('/getAllUsers', sqlController.getAllUsers);
+app.get('/getAllCourses', sqlController.getAllCourses);
+
 app.get('/getFaculties', sqlController.getFaculties);
 app.get('/getMajors', sqlController.getMajors);
+app.get('/getMinors', sqlController.getMinors);
+app.get('/getConcentrations', sqlController.getConcentrations);
+app.get('/putCourseTaken', sqlController.putCourseTaken);
+app.get('/putHasMajor', sqlController.putHasMajor);
+app.get('/putHasMinor', sqlController.putHasMinor);
+app.get('/deleteUser', sqlController.deleteUser);
+app.get('/makeAdmin', sqlController.makeAdmin);
+app.get('/getDepartments', sqlController.getDepartments);
+app.get('/addCourse', sqlController.addCourse);
+
+
 
 
 app.get('*', function(req, res) {

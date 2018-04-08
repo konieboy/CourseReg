@@ -1,0 +1,35 @@
+<div ng-controller="CreateCtrl" ng-app="myApp">    
+        <div data-ng-init="getUsers()">
+
+           <legend class="center" style="margin-left:auto;margin-right:auto;text-align:center;"> Please select a user to make an admin: </legend>
+            <br>
+    
+            <table class="table table-bordered">
+                <tr>
+                    <th>#</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Access Level</th>
+                </tr>
+                <tr ng-repeat="item in users.success" ng-class="{'selected':$index == selectedRow}" ng-click="setClickedRow($index)">
+                    <td>{{$index}}</td>
+                    <td>{{item.name}}</td>
+                    <td>{{item.email}}</td>
+                    <td>{{item.access_lvl}}</td>
+                </tr>
+            </table>
+            <div ng-show="users.success[selectedRow] != null && users.success[0] != null">
+                Are you sure you want to make {{users.success[selectedRow].name}} an admin?
+                <button ng-click="makeAdmin(selectedRow,users.success[selectedRow].email)"
+                    style="background:rgb(111, 159, 216) ;color: white; "> Confirm </button>
+            </div>
+            <a href="/admin" class="center">
+                <button style="background:rgb(216, 111, 176) ;color: white;">Go Back</button>
+            </a>
+    
+        </div>    
+
+<div ng-if="!isAuthenticated()" class="center" style="margin-left:auto;margin-right:auto;text-align:center;">
+    Hello, please login before using this page
+    <br>
+</div>

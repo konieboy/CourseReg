@@ -1,0 +1,53 @@
+<div ng-controller="CreateCtrl" ng-app="myApp">
+    <div ng-show="IsVisible">
+
+        <div ng-if="isAuthenticated()" class="center" style="margin-left:auto;margin-right:auto;text-align:center;">
+            <h3> Hello {{currentUser.name}}, please select one of the following actions to take: </h3>
+            <br>
+            <br>
+
+            <h4> Delete users</h4>
+            <a href="/deleteuser" class="center">
+                <button class="btn btn-success">Go</button>
+            </a>
+            <br>
+            <br>
+
+            <h4> Make Users Admin</h4>
+            <a href="/makeadmin" class="center">
+                <button class="btn btn-success">Go</button>
+            </a>
+            <br>
+            <br>
+
+            <h4>Add new course</h4>
+            <a href="/addcourse" class="center">
+                <button class="btn btn-success">Go</button>
+            </a>
+            <br>
+            <br>
+
+            <h4>Delete course</h4>
+            <a href="/deleteCourse" class="center">
+                <button class="btn btn-success">Go</button>
+            </a>
+            <br>
+            <br>
+       
+            <h4>Add new proffessor</h4>
+            <a href="/deleteProffessor" class="center">
+                <button class="btn btn-success">Go</button>
+            </a>
+            <br>
+            <br>   
+        </div>
+
+    </div>
+
+
+
+    <div ng-if="!isAuthenticated()" class="center" style="margin-left:auto;margin-right:auto;text-align:center;">
+        Hello, please login before using this page
+        <br>
+    </div>
+</div>

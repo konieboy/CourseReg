@@ -36,25 +36,55 @@
   </div>
 </div> -->
 
-<div class="container-holder">
-  <div class="container">
-    <div class="row">
-      <div class="col-md-6">
-        <div class="gray-box">
-          <a href="/create" class="btn btn-sq-lg btn-info">
-                  <i class="fa fa-user fa-5x"></i><br/>
-                  Create Your Schedule <br><br>
-                  <img src= "/Images/Books.svg" style='height: 120%; width: 100%; object-fit: contain; padding-bottom: 45%' >
-              </a>
+<div ng-controller="CreateCtrl" ng-app="myApp">
+
+  <div ng-if="isAuthenticated() && currentUser.access_lvl == 0"  class="container-holder">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-6">
+          <div class="gray-box">
+            <a href="/create" class="btn btn-sq-lg btn-info">
+                    <i class="fa fa-user fa-5x"></i><br/>
+                    Create Your Schedule <br><br>
+                    <img src= "/Images/Books.svg" style='height: 120%; width: 100%; object-fit: contain; padding-bottom: 45%' >
+                </a>
+          </div>
         </div>
+        <div class="col-md-6">
+          <p>
+            <a href="/view" class="btn btn-sq-lg btn-primary">
+              <i class="fa fa-user fa-5x"></i><br/>
+              View Your Schedule <br><br>
+              <img src= "/Images/student.svg" style='height: 80%; width: 80%; object-fit: contain; padding-bottom: 10%' >
+          </a>
       </div>
-      <div class="col-md-6">
-        <p>
-          <a href="/view" class="btn btn-sq-lg btn-primary">
-            <i class="fa fa-user fa-5x"></i><br/>
-            View Your Schedule! <br><br>
-            <img src= "/Images/student.svg" style='height: 80%; width: 80%; object-fit: contain; padding-bottom: 10%' >
-        </a>
     </div>
   </div>
+</div>
+
+<div ng-controller="CreateCtrl" ng-app="myApp">
+
+    <div ng-if="isAuthenticated() && currentUser.access_lvl == 1"  class="container-holder">
+      <div class="container" style="margin-left:auto;margin-right:auto;text-align:center;">
+              <a href="/admin" class="btn btn-sq-lg btn-info" >
+                      <i class="fa fa-user fa-5x"></i><br/>
+                      Access Admin Controls <br><br>
+                      <img src= "/Images/admin.png" style='height: 120%; width: 100%; object-fit: contain; padding-bottom: 45%' >
+                  </a>
+    </div>
+  </div>
+
+
+  <div ng-if="!isAuthenticated()" class="center" style="margin-left:auto;margin-right:auto;text-align:center;" >
+      <legend>Please login before using Course Registration</legend>
+      <a href="/login" class="center">
+        <button href="/login" class="btn btn-success">Log in</button>
+      </a>
+      
+  </div>
+  <!-- Usefull for displaying an objects contents -->
+  <div ng-repeat="(key, val) in currentUser">
+      <p>{{ key }}</p>
+      <p>{{ val }}</p>
+    </div>
 </div>

@@ -4,7 +4,8 @@ angular.module('MyApp', ['ngRoute', 'satellizer'])
 
     $routeProvider
       .when('/', {
-        templateUrl: 'partials/home.html'
+        templateUrl: 'partials/home.html',
+        resolve: { loginRequired: loginRequired }
       })
       .when('/contact', {
         templateUrl: 'partials/contact.html',
@@ -33,11 +34,29 @@ angular.module('MyApp', ['ngRoute', 'satellizer'])
       .when('/create', {
         templateUrl: 'partials/create.html',
         controller: 'CreateCtrl',
+        resolve: { loginRequired: loginRequired }
       })
-      .when('/view', {
-        templateUrl: 'partials/view.html',
+      .when('/admin', {
+        templateUrl: 'partials/admin.html',
+        controller: 'CreateCtrl',
+        resolve: { loginRequired: loginRequired }
+      })
+      .when('/deleteuser', {
+        templateUrl: 'partials/deleteuser.html',
+        controller: 'CreateCtrl',
+        resolve: { loginRequired: loginRequired }
+      })
+      .when('/makeadmin', {
+        templateUrl: 'partials/makeadmin.html',
         controller: 'ForgotCtrl',
+        resolve: { loginRequired: loginRequired }
       })
+      .when('/addcourse', {
+        templateUrl: 'partials/addcourse.html',
+        controller: 'ForgotCtrl',
+        resolve: { loginRequired: loginRequired }
+      })
+      
       .when('/reset/:token', {
         templateUrl: 'partials/reset.html',
         controller: 'ResetCtrl',

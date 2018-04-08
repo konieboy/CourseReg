@@ -329,3 +329,12 @@ th {
   font-weight: bold;    
     padding: 2px;
 }
+
+.carddemoBasicUsage .card-media {
+  background-color: #999999; }
+
+  .selected {
+    background-color: rgb(216, 111, 111);
+    color: white;
+    font-weight: bold;
+}
