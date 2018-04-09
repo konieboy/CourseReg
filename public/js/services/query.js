@@ -25,6 +25,44 @@ angular.module('MyApp')
         })
       },
 
+      getAllMajors: function () {
+
+        return $http.get('/getAllMajors');
+      },
+
+      getAllProfs: function () {
+        return $http.get('/getAllProfs');
+      },
+
+
+      addTeaches: function (prof_name, dept_name, course_num) {
+        console.log(prof_name);
+        console.log(dept_name);
+        console.log(course_num);
+
+
+        return $http.get('/addTeaches', {
+          params: {
+            prof_name: prof_name,
+            dept_name: dept_name,
+            course_num: course_num
+          }
+        })
+      },
+
+      deleteCourse: function (number, dept_name) {
+        console.log("Hello" + number);
+        console.log(dept_name);
+
+        return $http.get('/deleteCourse', {
+          params: {
+            number: number,
+            dept_name: dept_name
+          }
+        })
+      },
+
+
       getMinors: function (faculty) {
 
         console.log(faculty);
@@ -33,6 +71,14 @@ angular.module('MyApp')
             faculty: faculty
           }
         })
+      },
+
+      getAllMinors: function () {
+        return $http.get('/getAllMinors');
+      },
+      
+      getAllConcentrations: function () {
+        return $http.get('/getAllConcentrations');
       },
 
       deleteUser: function (email) {
@@ -116,6 +162,63 @@ angular.module('MyApp')
         })
       },
 
+      putPreReq: function (dept_name, course_num, dept_name_of_prereq, course_num_of_prereq) {
+        console.log(dept_name);
+        console.log(course_num);
+        console.log(dept_name_of_prereq);
+        console.log(course_num_of_prereq);
+
+        return $http.get('/putPreReq', {
+          params: {
+            dept_name: dept_name,
+            course_num: course_num,
+            dept_name_of_prereq: dept_name_of_prereq,
+            course_num_of_prereq: course_num_of_prereq
+          }
+        })
+      },
+
+      setMajReq: function (major_name, dept_name, course_num) {
+        console.log(major_name);
+        console.log(dept_name);
+        console.log(course_num);
+
+        return $http.get('/setMajReq', {
+          params: {
+            major_name: major_name,
+            dept_name: dept_name,
+            course_num: course_num,
+          }
+        })
+      },
+
+      setMinReq: function (minor_name, dept_name, course_num) {
+        console.log(minor_name);
+        console.log(dept_name);
+        console.log(course_num);
+
+        return $http.get('/setMinReq', {
+          params: {
+            minor_name: minor_name,
+            dept_name: dept_name,
+            course_num: course_num,
+          }
+        })
+      },
+
+      putConcentrationReq: function (con_name, dept_name, course_num) {
+        console.log(con_name);
+        console.log(dept_name);
+        console.log(course_num);
+
+        return $http.get('/putConcentrationReq', {
+          params: {
+            con_name: con_name,
+            dept_name: dept_name,
+            course_num: course_num,
+          }
+        })
+      },
       
       putHasMinor: function (email, faculty, minor) {
         console.log(email);

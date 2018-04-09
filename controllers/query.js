@@ -6,8 +6,22 @@ exports.getAllUsers = function (req, res)
   {
     knex('users')
     .then( users => res.send(users));
-  };  
+  };
 
+  exports.getAllProfs = function (req, res)
+  {
+    knex('professor')
+    .then( profs => res.send(profs));
+  };
+  
+  
+
+  exports.getAllConcentrations = function (req, res)
+  {
+    knex('concentration')
+    .then( concentration => res.send(concentration));
+  };  
+  
   
 exports.deleteUser = function (req, res)
 {
@@ -18,6 +32,20 @@ exports.deleteUser = function (req, res)
   }).del()
   .then(users => res.send());
 }; 
+
+exports.deleteCourse = function (req, res)
+{
+  console.log(req.query.number);
+  console.log(req.query.dept_name);
+
+  knex('course')
+  .del().where({
+    Number:req.query.number,
+    Dept_Name:req.query.dept_name
+    })
+  .then(courseD => res.send(200));
+}; 
+
 
 exports.makeAdmin = function (req, res)
 {
@@ -58,6 +86,19 @@ exports.getMajors = function (req, res)
     faculty_name:req.query.faculty
   }).select('name')
   .then(major => res.send(major));
+}; 
+
+exports.getAllMajors = function (req, res)
+{
+  knex('major')
+  .then(major => res.send(major));
+}; 
+
+
+exports.getAllMinors = function (req, res)
+{
+  knex('minor')
+  .then(minor => res.send(minor));
 }; 
 
 exports.getMinors= function (req, res)
@@ -113,7 +154,65 @@ exports.addCourse = function (req, res)
   console.log("Test" + req.query.name);
 
   knex('course')
-  .insert({Number: req.query.number, Dept_Name: req.query.dept_name, Name: req.query.name, Description: req.query.Description, AvGrade: req.query.avgrade})
+  .insert({Number: req.query.number, Dept_Name: req.query.dept_name, Name: req.query.name, Description: req.query.description, AvGrade: req.query.avgrade})
+  .then(nuthing => res.send(nuthing));
+}; 
+
+exports.setMajReq = function (req, res)
+{
+  console.log("major_name" + req.query.major_name);
+  console.log("dept_name" + req.query.dept_name);
+  console.log("course_num" + req.query.course_num);
+
+  knex('major_requires')
+  .insert({Major_Name: req.query.major_name, Dept_Name: req.query.dept_name, Course_Num: req.query.course_num})
+  .then(nuthing => res.send(nuthing));
+}; 
+
+exports.setMinReq = function (req, res)
+{
+  console.log("Minor_Name" + req.query.minor_name);
+  console.log("dept_name" + req.query.dept_name);
+  console.log("course_num" + req.query.course_num);
+
+  knex('minor_requires')
+  .insert({Minor_Name: req.query.minor_name, Dept_Name: req.query.dept_name, Course_Num: req.query.course_num})
+  .then(nuthing => res.send(nuthing));
+}; 
+
+exports.putConcentrationReq = function (req, res)
+{
+  console.log("Con_Name" + req.query.con_name);
+  console.log("dept_name" + req.query.dept_name);
+  console.log("course_num" + req.query.course_num);
+
+  knex('con_requires')
+  .insert({Con_Name: req.query.con_name, Dept_Name: req.query.dept_name, Course_Num: req.query.course_num})
+  .then(nuthing => res.send(nuthing));
+}; 
+
+exports.addTeaches = function (req, res)
+{
+  console.log("prof_name" + req.query.prof_name);
+  console.log("dept_name" + req.query.dept_name);
+  console.log("course_num" + req.query.course_num);
+
+  knex('teaches')
+  .insert({Prof_Name: req.query.prof_name, Dept_Name: req.query.dept_name, Course_Num: req.query.course_num})
+  .then(nuthing => res.send(nuthing));
+}; 
+
+
+exports.putPreReq = function (req, res)
+{
+  console.log("dept_name" + req.query.dept_name);
+  console.log("course_num" + req.query.course_num);
+  console.log("dept_name_of_prereq" + req.query.dept_name_of_prereq);
+  console.log("course_num_of_prereq" + req.query.course_num_of_prereq);
+
+
+  knex('prerequisite_of')
+  .insert({Dept_Name: req.query.dept_name, Dept_Name: req.query.dept_name, Course_Num: req.query.course_num, Dept_Name_Of_Prereq: req.query.dept_name_of_prereq, Course_Num_Of_Prereq: req.query.course_num_of_prereq })
   .then(nuthing => res.send(nuthing));
 }; 
 

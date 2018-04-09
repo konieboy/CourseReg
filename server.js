@@ -82,6 +82,18 @@ app.get('/deleteUser', sqlController.deleteUser);
 app.get('/makeAdmin', sqlController.makeAdmin);
 app.get('/getDepartments', sqlController.getDepartments);
 app.get('/addCourse', sqlController.addCourse);
+app.get('/getAllMinors', sqlController.getAllMinors);
+app.get('/getAllMajors', sqlController.getAllMajors);
+app.get('/setMajReq', sqlController.setMajReq);
+app.get('/setMinReq', sqlController.setMinReq);
+app.get('/getAllConcentrations', sqlController.getAllConcentrations);
+app.get('/putConcentrationReq', sqlController.putConcentrationReq);
+app.get('/putPreReq', sqlController.putPreReq);
+app.get('/getAllProfs', sqlController.getAllProfs);
+app.get('/addTeaches', sqlController.addTeaches);
+app.get('/deleteCourse', sqlController.deleteCourse);
+
+
 
 
 

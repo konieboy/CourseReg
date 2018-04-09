@@ -1,53 +1,83 @@
 <div ng-controller="CreateCtrl" ng-app="myApp">
     <div ng-show="IsVisible">
+        <div ng-show="IsCourse1Visible" class="container">
+            <div class="col-sm-8 col-sm-offset-2">
 
-        <div ng-if="isAuthenticated()" class="center" style="margin-left:auto;margin-right:auto;text-align:center;">
-            <h3> Hello {{currentUser.name}}, please select one of the following actions to take: </h3>
-            <br>
-            <br>
+                <h3> Hello {{currentUser.name}}, select one of the following actions to take: </h3>
+                <div ng-if="isAuthenticated()" class="center" style="margin-left:auto;margin-right:38%;text-align:right;">
 
-            <h4> Delete users</h4>
-            <a href="/deleteuser" class="center">
-                <button class="btn btn-success">Go</button>
-            </a>
-            <br>
-            <br>
+                    <br>
+                    <br>
+                    <h4 style="display: inline-block;"> Delete users</h4>
+                    <a href="/deleteuser" class="center">
+                        <button class="btn btn-success">Go</button>
+                    </a>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
 
-            <h4> Make Users Admin</h4>
-            <a href="/makeadmin" class="center">
-                <button class="btn btn-success">Go</button>
-            </a>
-            <br>
-            <br>
 
-            <h4>Add new course</h4>
-            <a href="/addcourse" class="center">
-                <button class="btn btn-success">Go</button>
-            </a>
-            <br>
-            <br>
+                    <h4 style="display: inline-block;"> Make Users Admin</h4>
+                    <a href="/makeadmin" class="center">
+                        <button class="btn btn-success">Go</button>
+                    </a>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
 
-            <h4>Delete course</h4>
-            <a href="/deleteCourse" class="center">
-                <button class="btn btn-success">Go</button>
-            </a>
-            <br>
-            <br>
-       
-            <h4>Add new proffessor</h4>
-            <a href="/deleteProffessor" class="center">
-                <button class="btn btn-success">Go</button>
-            </a>
-            <br>
-            <br>   
+
+                    <h4 style="display: inline-block;">Add new course</h4>
+                    <a href="/addcourse" class="center">
+                        <button class="btn btn-success">Go</button>
+                    </a>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+
+
+                    <h4 style="display: inline-block;">Delete course</h4>
+                    <a href="/delCourse" class="center">
+                        <button class="btn btn-success">Go</button>
+                    </a>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+
+
+                    <h4 style="display: inline-block;">Add new professor</h4>
+                    <a href="/addprofessor" class="center">
+                        <button class="btn btn-success">Go</button>
+                    </a>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+
+
+                    <h4 style="display: inline-block;">Delete professor</h4>
+                    <a href="/delprofessor" class="center">
+                        <button class="btn btn-success">Go</button>
+                    </a>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+
+                </div>
+            </div>
         </div>
 
     </div>
+</div>
 
 
 
-    <div ng-if="!isAuthenticated()" class="center" style="margin-left:auto;margin-right:auto;text-align:center;">
-        Hello, please login before using this page
-        <br>
-    </div>
+<div ng-if="!isAuthenticated()" class="center" style="margin-left:auto;margin-right:auto;text-align:center;">
+    Hello, please login before using this page
+    <br>
+</div>
 </div>

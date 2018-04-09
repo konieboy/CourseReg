@@ -1,0 +1,39 @@
+<div ng-controller="CreateCtrl" ng-app="myApp">
+
+    <div class="container">
+        <div class="col-sm-8 col-sm-offset-2">
+            <!-- PAGE HEADER -->
+            <div class="page-header">
+                <h2>Select a course to delete</h2>
+            </div>
+
+            <div data-ng-init="getAllCourses()">
+                <br>
+                <table class="table table-bordered">
+                    <tr>
+                        <th>#</th>
+                        <th>Course Number</th>
+                        <th>Course Name</th>
+                        <th>Course Description</th>
+                    </tr>
+                    <tr ng-repeat="item in courses.success" ng-class="{'selected':$index == selectedRow}" ng-click="setClickedRow($index)">
+                        <td>{{$index}}</td>
+                        <td>{{item.Dept_Name}} {{item.Number}}</td>
+                        <td>{{item.Name}}</td>
+                        <td>{{item.Description}}</td>
+                    </tr>
+                </table>
+                <div ng-show="courses.success[selectedRow] != null && courses.success[0] != null">
+                    Are you sure you want to delete delete {{courses.success[selectedRow].Dept_Name}} {{courses.success[selectedRow].Number}}?
+                    <button ng-click="deleteCourse(selectedRow,courses.success[selectedRow].Number, courses.success[selectedRow].Dept_Name)"
+                        style="background:rgb(111, 159, 216) ;color: white; "> Confirm </button>
+                </div>
+                <a href="/admin" class="center">
+                    <button style="background:rgb(111, 216, 160) ;color: white;"> Finish </button>
+                </a>
+            </div>
+
+        </div>
+        <!-- col-sm-8 -->
+    </div>
+</div>
