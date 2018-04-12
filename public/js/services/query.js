@@ -34,6 +34,25 @@ angular.module('MyApp')
         return $http.get('/getAllProfs');
       },
 
+      getTakingCourses: function (email) {
+        console.log(email);
+
+
+        return $http.get('/getTakingCourses', {
+          params: {
+            email: email
+          }
+        })
+      },
+
+      deleteProf: function (name) {
+        console.log(name);
+        return $http.get('/deleteProf', {
+          params: {
+            name: name
+          }
+        })
+      },
 
       addTeaches: function (prof_name, dept_name, course_num) {
         console.log(prof_name);
@@ -50,6 +69,83 @@ angular.module('MyApp')
         })
       },
 
+      putProf: function (profName,profRating,profStart) {
+        
+        console.log(profName);
+        console.log(profRating);
+        console.log(profStart);
+          
+        return $http.get('/putProf', {
+          params: {
+            profName:profName,
+            profRating: profRating,
+            profStart: profStart
+          }
+        })
+      },
+
+      getMajorCourses: function (major_name, grade, rating) {
+        
+        console.log(major_name);
+        console.log(grade);
+        console.log(rating);
+          
+        return $http.get('/getMajorCourses', {
+          params: {
+            major_name: major_name,
+            grade: grade,
+            rating: rating
+          }
+        })
+      },   
+      
+      getConCourses: function (con_name, grade, rating) {
+        
+        console.log(con_name);
+        console.log(grade);
+        console.log(rating);
+          
+        return $http.get('/getConCourses', {
+          params: {
+            con_name: con_name,
+            grade: grade,
+            rating: rating
+          }
+        })
+      },  
+      
+      getMinorCourses: function (minor_name, grade, rating) {
+        
+        console.log(minor_name);
+        console.log(grade);
+        console.log(rating);
+          
+        return $http.get('/getMinorCourses', {
+          params: {
+            minor_name: minor_name,
+            grade: grade,
+            rating: rating
+          }
+        })
+      },    
+
+
+
+      deleteTakingCourses: function (email, dept_name, number) {
+        
+        console.log(email);
+        console.log(dept_name);
+        console.log("Hello" + number);
+          
+        return $http.get('/deleteTakingCourses', {
+          params: {
+            email:email,
+            dept_name: dept_name,
+            number: number
+          }
+        })
+      },
+  
       deleteCourse: function (number, dept_name) {
         console.log("Hello" + number);
         console.log(dept_name);
@@ -125,6 +221,22 @@ angular.module('MyApp')
           }
         })
       },
+      putCourseTaking: function (email, dept_name, course_num) {
+        console.log(email);
+        console.log(dept_name);
+        console.log(course_num);
+
+        // This should be a put request but fuck it
+        return $http.get('/putCourseTaking', {
+          params: {
+            email: email,
+            dept_name: dept_name,
+            course_num: course_num
+
+          }
+        })
+      },
+      
 
       putHasMajor: function (email, faculty, major, concentration) {
         console.log(email);

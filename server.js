@@ -92,10 +92,14 @@ app.get('/putPreReq', sqlController.putPreReq);
 app.get('/getAllProfs', sqlController.getAllProfs);
 app.get('/addTeaches', sqlController.addTeaches);
 app.get('/deleteCourse', sqlController.deleteCourse);
-
-
-
-
+app.get('/getTakingCourses', sqlController.getTakingCourses);
+app.get('/deleteTakingCourses', sqlController.deleteTakingCourses);
+app.get('/putProf', sqlController.putProf);
+app.get('/deleteProf', sqlController.deleteProf);
+app.get('/getMajorCourses', sqlController.getMajorCourses);
+app.get('/getMinorCourses', sqlController.getMinorCourses);
+app.get('/getConCourses', sqlController.getConCourses);
+app.get('/putCourseTaking', sqlController.putCourseTaking);
 
 
 app.get('*', function(req, res) {

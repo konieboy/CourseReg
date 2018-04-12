@@ -1,40 +1,44 @@
 <div ng-controller="CreateCtrl" ng-app="myApp">
-    <div ng-show="IsVisible">
+    <div class="container">
+        <div class="col-sm-8 col-sm-offset-2">
 
-        <div ng-if="isAuthenticated()" class="center" style="margin-left:auto;margin-right:auto;text-align:center;">
-            <h3>{{currentUser.name}}'s Schedule: </h3>
-            <br>
+            <div ng-if="isAuthenticated()" class="center" style="margin-left:auto;margin-right:auto;text-align:center;">
+                <h3>{{currentUser.name}}'s Schedule: </h3>
+                <br>
 
-            <div data-ng-init="getAllTakingCourses(currentUser.email)">
+                <div data-ng-init="getAllTakingCourses(currentUser.email)">
 
-                <table class="table table-bordered">
-                    <tr>
-                        <th>#</th>
-                        <th>Course Number</th>
-                        <th>Course Name</th>
-                        <th>Course Description</th>
-                    </tr>
-                    <tr ng-repeat="item in takenCourses.success" ng-class="{'selected':$index == selectedRow}" ng-click="setClickedRow($index)">
-                        <td>{{$index}}</td>
-                        <td>{{item.Dept_Name}} {{item.Number}}</td>
-                        <td>{{item.Name}}</td>
-                        <td>{{item.Description}}</td>
-                    </tr>
-                </table>
-                <div ng-show="takenCourses.success[selectedRow] != null && takenCourses.success[0] != null">
-                    Are you sure you want to delete {{courses.success[selectedRow].Dept_Name}} {{courses.success[selectedRow].Number}} from taken courses?
-                    <button ng-click="deleteTakenCourses(selectedRow, currentUser.email, courses.success[selectedRow].Dept_Name, courses.success[selectedRow].Number)"
-                        style="background:rgb(111, 159, 216) ;color: white; "> Confirm </button>
+                    <table class="table table-bordered">
+                        <tr>
+                            <th>#</th>
+                            <th>Course Number</th>
+                            <th>Course Name</th>
+                            <th>Course Description</th>
+                        </tr>
+                        <tr ng-repeat="item in takenCourses.success" ng-class="{'selected':$index == selectedRow}" ng-click="setClickedRow($index)">
+                            <td>{{$index}}</td>
+                            <td>{{item.Dept_Name}} {{item.Number}}</td>
+                            <td>{{item.Name}}</td>
+                            <td>{{item.Description}}</td>
+                        </tr>
+                    </table>
+                    <div ng-show="takenCourses.success[selectedRow] != null && takenCourses.success[0] != null">
+                        Are you sure you want to delete {{takenCourses.success[selectedRow].Dept_Name}} {{takenCourses.success[selectedRow].Number}} from taken
+                        courses?
+                        <button ng-click="deleteTakingCourses(selectedRow, currentUser.email, takenCourses.success[selectedRow].Dept_Name, takenCourses.success[selectedRow].Number)"
+                            style="background:rgb(111, 159, 216) ;color: white; "> Confirm </button>
+                    </div>
+                    <a href="/" class="center">
+                        <button style="background:rgb(111, 216, 160) ;color: white;"> Finish </button>
+                    </a>
+    
                 </div>
-                <button style="background:rgb(216, 111, 176) ;color: white;"> Next </button>
-
             </div>
         </div>
+
     </div>
 
-
-    <div ng-if="!isAuthenticated()" class="center" style="margin-left:auto;margin-right:auto;text-align:center;">
-        Hello, please login before using this page
-        <br>
-    </div>
+<div ng-if="!isAuthenticated()" class="center" style="margin-left:auto;margin-right:auto;text-align:center;">
+    Hello, please login before using this page
+    <br>
 </div>

@@ -1,0 +1,54 @@
+<div ng-controller="CreateCtrl" ng-app="myApp">
+    <div  class="container">
+        <div class="col-sm-8 col-sm-offset-2">
+            <!-- PAGE HEADER -->
+            <div class="page-header">
+                <h2>Add a new professor</h2>
+            </div>
+
+            <!-- FORM -->
+            <!-- pass in the variable if our form is valid or invalid -->
+            <form ng-show="IsCourse6Visible" name="userForm" ng-submit="submitForm(userForm.$valid)">
+                <!-- novalidate prevents HTML5 validation since we will be validating ourselves -->
+
+                <!-- Course Number -->
+                <div class="form-group">
+                    <label>First and Last name</label>
+                    <input type="text" name="profName" class="form-control" ng-model="profName" required>
+                </div>
+
+                <!-- Course Name -->
+                <div class="form-group">
+                    <label>Rating {{profRating}}</label>
+                    <input type="range" step = "1" min="1" max="5" name="profRating" class="form-control" ng-model="profRating" required>
+                </div>
+
+                <!-- Description -->
+                <div class="form-group">
+                    <label>Start Date</label>
+                    <input type="date" name="profStart" class="form-control" ng-model="profStart" required>
+                </div>
+
+                    <!-- SUBMIT BUTTON -->
+                    <button type="submit" class="btn btn-success" ng-click="userForm.$valid && putProf(profName,profRating,profStart); userForm.$valid && ShowCourse6()">Submit</button>
+                </div>
+
+            </form>
+            <div  class="container">
+                <div class="col-sm-8 col-sm-offset-2">
+        
+            <div ng-show="!IsCourse6Visible" data-ng-init="getAllProfs()">
+                <h3>Professor {{profName}} has been added to the system</h3>
+            </div>
+
+            <a href="/admin" class="center">
+                <button style="background:rgb(111, 216, 160) ;color: white;"> Finish </button>
+            </a>
+        </div>
+    </div>
+
+        </div>
+        <!-- col-sm-8 -->
+    </div>
+</div>
+

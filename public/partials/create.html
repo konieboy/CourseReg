@@ -14,33 +14,35 @@
             </div>
 
             <div ng-if="selectedFaculty.name" data-ng-init="getMajors(selectedFaculty.name)">
-                <br> <h3>Select the major you belong to:</h3>
+                <br>
+                <h3>Select the major you belong to:</h3>
                 <select ng-model="selectedMajor" ng-options="m as m.name for m in majors.success">
                     <option value="">Select Major</option>
                 </select>
-                <!-- <div> Selected: {{selectedMajor.name}} </div> -->
-                <div ng-if="selectedMajor.name" data-ng-init="getConcentrations(selectedFaculty.name, selectedMajor.name)">
-                    <br> <h3>Select the concentration you belong to:</h4>
+                <div ng-if="selectedMajor.name" data-ng-init="getConcentrations(selectedFaculty.name, selectedMajor.name); setMajor(selectedMajor.name)">
+                    <br>
+                    <h3>Select the concentration you belong to:</h3>
                     <br>
                     <select ng-model="selectedconcentration" ng-options="c as c.name for c in concentrations.success">
                         <option value="">Select Concentration</option>
                     </select>
                     <!-- <div> Selected: {{selectedconcentration.name}} </div> -->
 
-                    <div ng-if="selectedMajor.name" data-ng-init="getMinors(selectedFaculty.name)">
-                        <br><h3>Please select the minor you belong to:</h4>
+                    <div ng-if="selectedMajor.name" data-ng-init="getMinors(selectedFaculty.name); setCon(selectedconcentration.name)">
                         <br>
-                        <select ng-model="selectedMinor" ng-options="m as m.name for m in minors.success">
-                            <option value="">Select Minor</option>
-                        </select>
-                        <!-- <div> Selected: {{selectedMinor.name}} </div> -->
-
-                        <div ng-if="selectedMajor.name" data-ng-init="getMinors(selectedFaculty.name)">
+                        <h3>Please select the minor you belong to:</h4>
                             <br>
-                            <button ng-click="nextPage(currentUser.email, selectedFaculty.name, selectedMajor.name, selectedMinor.name, selectedconcentration.name); ShowHide() "
-                            style="background:rgb(111, 159, 216) ;color: white; ">
-                            Continue</button>
-                        </div>
+                            <select ng-model="selectedMinor" ng-options="m as m.name for m in minors.success">
+                                <option value="">Select Minor</option>
+                            </select>
+                            <!-- <div> Selected: {{selectedMinor.name}} </div> -->
+
+                            <div ng-if="selectedMajor.name" data-ng-init="getMinors(selectedFaculty.name)">
+                                <br>
+                                <button ng-click="nextPage(currentUser.email, selectedFaculty.name, selectedMajor.name, selectedMinor.name, selectedconcentration.name); ShowHide(); setMinor(selectedMinor.name) ; setCon(selectedconcentration.name) "
+                                    style="background:rgb(111, 159, 216) ;color: white; ">
+                                    Continue</button>
+                            </div>
                     </div>
 
                 </div>
@@ -49,48 +51,14 @@
 
         </div>
 
-        <!-- <body> hello {{selectedFaculty.success.name}} </body>
-  <body> hello {{selectedFaculty.success}} </body>
-  <body> hello {{selectedFaculty.name}} </body> -->
-
-        <!-- <div ng-if="{{selectedFaculty.name}} != null" class = "center" style="margin-left:auto;margin-right:auto;text-align:center;">
-        Hello {{currentUser.name}}, please select the faculty you belong to:<br>
- -->
-
-
-        <!-- 
-    <div data-ng-init="getUsers()">
-            
-        <body ng-app="ngRepeat">
-            <div ng-controller="CreateCtrl">
-            <table class = "center">
-              <tr>
-                  <th>Name</th>
-                  <th>Id</th>
-                  <th>misc</th>
-              </tr>
-
-              <tr ng-repeat="item in users.success">
-                  <td>{{item.name}}</td>
-                  <td>{{item.id}}</td>
-                  <td>{{item.name}}</td>
-              </tr>
-          </table> -->
-
-        <!-- <ul>
-      <li ng-repeat="name in response.text"><p>{{name}}</p></li>
-    </ul> -->
-
-
-
     </div>
-    <div ng-show="!IsVisible">
+    <div ng-show="!IsVisible && IsCourse1Visible">
 
         <div data-ng-init="getAllCourses()">
 
-           <legend class="center" style="margin-left:auto;margin-right:auto;text-align:center;"> Please select the courses that you have already taken: </legend>
+            <legend class="center" style="margin-left:auto;margin-right:auto;text-align:center;"> Please select the courses that you have already taken: </legend>
             <br>
-    
+
             <table class="table table-bordered">
                 <tr>
                     <th>#</th>
@@ -110,14 +78,123 @@
                 <button ng-click="updateRows(selectedRow, currentUser.email, courses.success[selectedRow].Dept_Name, courses.success[selectedRow].Number)"
                     style="background:rgb(111, 159, 216) ;color: white; "> Confirm </button>
             </div>
-            <button style="background:rgb(216, 111, 176) ;color: white;"> Next </button>
+            <button ng-click="ShowCourse1()" style="background:rgb(216, 111, 176) ;color: white;"> Next </button>
 
         </div>
     </div>
-</div>
 
+    <div ng-show="!IsCourse1Visible" class="container">
+        <div class="col-sm-8 col-sm-offset-2">
+            <h4>Filter options:</h4>
+            <br>
 
-<div ng-if="!isAuthenticated()" class="center" style="margin-left:auto;margin-right:auto;text-align:center;">
-    Hello, please login before using this page
-    <br>
+            <h4 style="display: inline-block;">Rating</h4>
+            <div class="form-group">
+                    <label>Min Prof Rating {{profRating}}</label>
+                    <input type="range" step = "1" min="1" max="5" name="profRating" class="form-control" ng-model="profRating" required>
+            </div>
+
+            <h4 style="display: inline-block;">Rating</h4>
+            <div class="form-group">
+                    <label>Min Class Average {{classMark}}</label>
+                    <input type="range" step = "1" min="1" max="100" name="classMark" class="form-control" ng-model="classMark" required>
+            </div>
+
+            <button ng-click="getMajorCourses(major, classMark, profRating); getMinorCourses(minor, classMark, profRating); getConCourses(con, classMark, profRating)" class="btn btn-success"> Search For Classes</button>
+            <h4>Courses that your major requires</h4>
+            <div>
+                <br>
+                <table class="table table-bordered">
+                    <tr>
+                        <th>#</th>
+                        <th>Course Name</th>
+                        <th>Description</th>
+                        <th>Professor Name</th>
+                        <th>Professor Rating</th>
+                        <th>Average Grade</th>
+                    </tr>
+                    <tr ng-repeat="item in majorCourses.success" ng-class="{'selected':$index == selectedRow1}" ng-click="setClickedRow1($index)">
+                        <td>{{$index}}</td>
+                        <td>{{item.Dept_name}} {{item.Number}}</td>
+                        <td>{{item.Description}}</td>
+                        <td>{{item.Prof_Name}}</td>
+                        <td>{{item.Rating}}</td>
+                        <td>{{item.AvGrade}}</td>
+
+                    </tr>
+                </table>
+                <div ng-show="majorCourses.success[selectedRow1] != null && majorCourses.success[0] != null">
+                    Are you sure you want to add {{majorCourses.success[selectedRow1].Dept_Name}} {{majorCourses.success[selectedRow1].Number}} to your schedule?
+                    <button ng-click="putCourseTaking(currentUser.email, majorCourses.success[selectedRow1].Dept_Name, majorCourses.success[selectedRow1].Number)" style="background:rgb(111, 159, 216) ;color: white; ">
+                        Confirm </button>
+                </div>
+                <h4>Courses that your minor requires</h4>
+                <div>
+                    <br>
+                    <table class="table table-bordered">
+                        <tr>
+                            <th>#</th>
+                            <th>Course Name</th>
+                            <th>Description</th>
+                            <th>Professor Name</th>
+                            <th>Professor Rating</th>
+                            <th>Average Grade</th>
+                        </tr>
+                        <tr ng-repeat="item in minorCourses.success" ng-class="{'selected':$index == selectedRow2}" ng-click="setClickedRow2($index)">
+                            <td>{{$index}}</td>
+                            <td>{{item.Dept_name}} {{item.Number}}</td>
+                            <td>{{item.Description}}</td>
+                            <td>{{item.Prof_Name}}</td>
+                            <td>{{item.Rating}}</td>
+                            <td>{{item.AvGrade}}</td>
+    
+                        </tr>
+                    </table>
+                    <div ng-show="minorCourses.success[selectedRow2] != null && minorCourses.success[0] != null">
+                        Are you sure you want to add {{minorCourses.success[selectedRow2].Dept_Name}} {{minorCourses.success[selectedRow2].Number}} to your schedule?
+                        <button ng-click="putCourseTaking(currentUser.email, minorCourses.success[selectedRow2].Dept_Name, minorCourses.success[selectedRow2].Number)" style="background:rgb(111, 159, 216) ;color: white; ">
+                            Confirm </button>
+                    </div>
+            </div>
+
+            <h4>Courses that your concentration requires</h4>
+            <div>
+                <br>
+                <table class="table table-bordered">
+                    <tr>
+                        <th>#</th>
+                        <th>Course Name</th>
+                        <th>Description</th>
+                        <th>Professor Name</th>
+                        <th>Professor Rating</th>
+                        <th>Average Grade</th>
+                    </tr>
+                    <tr ng-repeat="item in conCourses.success" ng-class="{'selected':$index == selectedRow3}" ng-click="setClickedRow3($index)">
+                        <td>{{$index}}</td>
+                        <td>{{item.Dept_name}} {{item.Number}}</td>
+                        <td>{{item.Description}}</td>
+                        <td>{{item.Prof_Name}}</td>
+                        <td>{{item.Rating}}</td>
+                        <td>{{item.AvGrade}}</td>
+
+                    </tr>
+                </table>
+                <div ng-show="conCourses.success[selectedRow3] != null && conCourses.success[0] != null">
+                    Are you sure you want to add {{conCourses.success[selectedRow3].Dept_Name}} {{conCourses.success[selectedRow3].Number}} to your schedule?
+                    <button ng-click="putCourseTaking(currentUser.email, conCourses.success[selectedRow3].Dept_Name, conCourses.success[selectedRow3].Number)" style="background:rgb(111, 159, 216) ;color: white; ">
+                        Confirm </button>
+                </div>
+
+                <a href="/view" class="center">
+                    <button style="background:rgb(111, 216, 160) ;color: white;"> Finish </button>
+                </a> 
+
+        </div>
+        <!-- col-sm-8 -->
+    </div>
+
+    <div ng-if="!isAuthenticated()" class="center" style="margin-left:auto;margin-right:auto;text-align:center;">
+        Hello, please login before using this page
+        <br>
+    </div>
 </div>

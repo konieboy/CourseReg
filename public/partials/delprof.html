@@ -1,0 +1,35 @@
+<div ng-controller="CreateCtrl" ng-app="myApp">    
+    <div data-ng-init="getAllProfs()">
+
+       <legend class="center" style="margin-left:auto;margin-right:auto;text-align:center;"> Please select a user to delete: </legend>
+        <br>
+
+        <table class="table table-bordered">
+            <tr>
+                <th>#</th>
+                <th>Name</th>
+                <th>Rating</th>
+                <th>Start Date</th>
+            </tr>
+            <tr ng-repeat="item in profs.success" ng-class="{'selected':$index == selectedRow}" ng-click="setClickedRow($index)">
+                <td>{{$index}}</td>
+                <td>{{item.Name}}</td>
+                <td>{{item.Rating}}</td>
+                <td>{{item.StartDate | date:dateFormat }}</td>
+            </tr>
+        </table>
+        <div ng-show="profs.success[selectedRow] != null && profs.success[0] != null">
+            Are you sure you want to remove {{profs.success[selectedRow].Name}} from the system?
+            <button ng-click="deleteProf(selectedRow, profs.success[selectedRow].Name)"
+                style="background:rgb(111, 159, 216) ;color: white; "> Confirm </button>
+        </div>
+        <a href="/admin" class="center">
+            <button style="background:rgb(216, 111, 176) ;color: white;">Go Back</button>
+        </a>
+
+    </div>    
+
+<div ng-if="!isAuthenticated()" class="center" style="margin-left:auto;margin-right:auto;text-align:center;">
+Hello, please login before using this page
+<br>
+</div>

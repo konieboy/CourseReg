@@ -33,6 +33,31 @@ exports.deleteUser = function (req, res)
   .then(users => res.send());
 }; 
 
+exports.deleteProf = function (req, res)
+{
+  console.log(req.query.name);
+  knex('professor')
+  .where({
+    Name:req.query.name
+  }).del()
+  .then(profD => res.send(200));
+}; 
+
+exports.deleteTakingCourses = function (req, res)
+{
+  console.log(req.query.email);
+  console.log(req.query.dept_name);
+  console.log(req.query.number);
+
+  knex('taking_course')
+  .del().where({
+    Course_Num:req.query.number,
+    Dept_Name:req.query.dept_name,
+    Student_ID:req.query.email
+    })
+  .then(courseTD => res.send(200));
+}; 
+
 exports.deleteCourse = function (req, res)
 {
   console.log(req.query.number);
@@ -88,6 +113,22 @@ exports.getMajors = function (req, res)
   .then(major => res.send(major));
 }; 
 
+exports.getTakingCourses = function (req, res)
+{
+  knex('course')
+  .join('taking_course', function () {
+    this
+      .on('course.Dept_Name', 'taking_course.Dept_Name')
+      .on('course.Number', 'taking_course.Course_Num');
+  })
+  .where({
+    'taking_course.Student_ID':req.query.email
+  }).select()
+  .then(taking => res.send(taking));
+}; 
+
+
+
 exports.getAllMajors = function (req, res)
 {
   knex('major')
@@ -119,12 +160,30 @@ exports.getConcentrations = function (req, res)
   }).select('name')
   .then(major => res.send(major));
 };  
-
+exports.putCourseTaking = function (req, res)
+{
+  console.log("Test" + req.query.email);
+  knex('taking_course')
+  .insert({Student_ID: req.query.email , Dept_Name: req.query.dept_name,  Course_Num: req.query.course_num})
+  .then(nuthing => res.send(nuthing));
+};  
+  
 exports.putCourseTaken = function (req, res)
 {
   console.log("Test" + req.query.email);
   knex('taken_course')
   .insert({Student_ID: req.query.email , Dept_Name: req.query.dept_name,  Course_Num: req.query.course_num})
+  .then(nuthing => res.send(nuthing));
+};  
+
+exports.putProf = function (req, res)
+{
+  console.log("Test" + req.query.profName);
+  console.log("Test" + req.query.profRating);
+  console.log("Test" + req.query.profStart);
+
+  knex('professor')
+  .insert({Name: req.query.profName , Rating: req.query.profRating,  StartDate: req.query.profStart})
   .then(nuthing => res.send(nuthing));
 };  
 
@@ -216,3 +275,96 @@ exports.putPreReq = function (req, res)
   .then(nuthing => res.send(nuthing));
 }; 
 
+exports.getMajorCourses = function (req, res)
+{
+  console.log(req.query.grade);
+  console.log(req.query.rating);
+
+  knex('course')
+  .join('major_requires', function () {
+    this
+      .on('course.Dept_Name', 'major_requires.Dept_Name')
+      .on('course.Number', 'major_requires.Course_Num');
+  })
+  .where('major_requires.Major_name', '=', req.query.major_name)
+  // .join('taking_course')
+  // .where('taking_course.Student_ID', '!=', '1@1.com')
+  // .join('taken_course')
+  // .whereNot('taken_course.Student_ID', '!=', '1@1.com')
+
+  .join('teaches', function () {
+    this
+      .on('course.Dept_Name', 'teaches.Dept_Name')
+      .on('course.Number', 'teaches.Course_Num');
+  })
+  .join('professor', function () {
+    this
+      .on('teaches.Prof_Name', 'professor.Name');
+  })
+
+  .where('professor.rating', '>=', req.query.rating)
+  .where('course.AvGrade', '>=', req.query.grade)
+
+  .orderBy('course.Number', 'asc')  
+  .select()
+  .then(courses => res.send(courses));
+}; 
+
+exports.getMinorCourses = function (req, res)
+{
+  console.log(req.query.grade);
+  console.log(req.query.rating);
+  knex('course')
+  .join('minor_requires', function () {
+    this
+      .on('course.Dept_Name', 'minor_requires.Dept_Name')
+      .on('course.Number', 'minor_requires.Course_Num');
+  })
+  .where('minor_requires.Minor_Name', '=', req.query.minor_name)
+
+  .join('teaches', function () {
+    this
+      .on('course.Dept_Name', 'teaches.Dept_Name')
+      .on('course.Number', 'teaches.Course_Num');
+  })
+  .join('professor', function () {
+    this
+      .on('teaches.Prof_Name', 'professor.Name');
+  })
+
+  .where('professor.rating', '>=', req.query.rating)
+  .where('course.AvGrade', '>=', req.query.grade)
+
+  .orderBy('course.Number', 'asc')  
+  .select()
+  .then(courses => res.send(courses));
+}; 
+
+exports.getConCourses = function (req, res)
+{
+  console.log(req.query.grade);
+  console.log(req.query.rating);
+
+  knex('course')
+  .join('con_requires', function () {
+    this
+      .on('course.Dept_Name', 'con_requires.Dept_Name')
+      .on('course.Number', 'con_requires.Course_Num');
+  })  
+  .where('con_requires.Con_Name', '=', req.query.con_name)
+
+  .join('teaches', function () {
+    this
+      .on('course.Dept_Name', 'teaches.Dept_Name')
+      .on('course.Number', 'teaches.Course_Num');
+  })
+  .join('professor', function () {
+    this
+      .on('teaches.Prof_Name', 'professor.Name');
+  })
+  .where('professor.rating', '>=', req.query.rating)
+  .where('course.AvGrade', '>=', req.query.grade)
+  .orderBy('course.Number', 'asc')  
+  .select()
+  .then(courses => res.send(courses));
+}; 

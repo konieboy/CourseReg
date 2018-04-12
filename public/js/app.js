@@ -26,6 +26,16 @@ angular.module('MyApp', ['ngRoute', 'satellizer'])
         controller: 'ProfileCtrl',
         resolve: { loginRequired: loginRequired }
       })
+      .when('/addprof', {
+        templateUrl: 'partials/addprof.html',
+        controller: 'CreateCtrl',
+        resolve: { loginRequired: loginRequired }
+      })
+      .when('/delprof', {
+        templateUrl: 'partials/delprof.html',
+        controller: 'CreateCtrl',
+        resolve: { loginRequired: loginRequired }
+      })
       .when('/forgot', {
         templateUrl: 'partials/forgot.html',
         controller: 'ForgotCtrl',
